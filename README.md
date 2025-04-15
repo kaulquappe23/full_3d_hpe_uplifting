@@ -7,3 +7,15 @@ The paper is accepted for [CVsports'25](https://vap.aau.dk/cvsports/) at [CVPR 2
 ![Example](visualization.png)
 
 Work in progress! 
+
+## Citation
+
+In case this work is useful for your research, please consider citing:
+```bibtex
+@article{ludwig2025efficient2d3dhuman,
+      title={Efficient 2D to Full 3D Human Pose Uplifting including Joint Rotations}, 
+      author={Katja Ludwig and Yuliia Oksymets and Robin Schön and Daniel Kienzle and Rainer Lienhart},
+      year={2025},
+      journal={arXiv preprint arXiv:2504.09953},
+}
+```
