@@ -16,6 +16,6 @@ In case this work is useful for your research, please consider citing:
       title={Efficient 2D to Full 3D Human Pose Uplifting including Joint Rotations}, 
       author={Katja Ludwig and Yuliia Oksymets and Robin Schön and Daniel Kienzle and Rainer Lienhart},
       year={2025},
-      journal={arXiv preprint arXiv:2504.09953},
+      journal = {IEEE/CVF International Conference on Computer Vision and Pattern Recognition Workshops (CVPRW)},
 }
 ```
