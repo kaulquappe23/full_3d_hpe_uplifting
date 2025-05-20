@@ -149,7 +149,4 @@ anthro/send-data/
 *._*
 #*.png
 
-uplift_upsample/pretrained_weights/
-smpl-models/
-inverse_kinematics/V02_05/
-anthro/measurements/smplx_vert_segmentation.json
+logs/
