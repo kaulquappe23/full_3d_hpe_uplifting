@@ -32,7 +32,7 @@ We train our models based on the 2D keypoint output from vitpose. You can downlo
 
 You can evaluate our trained models by running 
 ```bash
-python -m run.eval -c <config-file> -w <weights-file>`
+python -m run.eval -c <config-file> -w <weights-file>
 ```
 You can further specify to output the joint-wise results by adding the flag `--per_joint`and to output the results for the 37 keypoints from the A2B paper by adding the flag `--kpts_37`. You can download the pretrained weights [here](https://mediastore.rz.uni-augsburg.de/get/bOKbRlbj4_/). The following table lists the results, the required config file and the weights. All config files can be found in the experiments folder.
 
@@ -48,7 +48,7 @@ You can further specify to output the joint-wise results by adding the flag `--p
 
 You can train all the models yourself by running 
 ```bash
-python -m run.train -c <config-file>`
+python -m run.train -c <config-file>
 ``` 
 with one of the provided configs from the experiments folder. The weights and tensorboard output will be logged to a subfolder of the `LOG_DIR` that you set in the `paths.py` file. The validation is executed on a subset of all frames from s09 (every 4th frame), otherwise the validation would take a very long time. You can use the evaluation script explained in the previous section for evaluating your trained model. You might have to adjust the path to the pretrained weights. We use `amass_351.pth` from the weights folder.
 
