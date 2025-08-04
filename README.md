@@ -52,6 +52,31 @@ python -m run.train -c <config-file>
 ``` 
 with one of the provided configs from the experiments folder. The weights and tensorboard output will be logged to a subfolder of the `LOG_DIR` that you set in the `paths.py` file. The validation is executed on a subset of all frames from s09 (every 4th frame), otherwise the validation would take a very long time. You can use the evaluation script explained in the previous section for evaluating your trained model. You might have to adjust the path to the pretrained weights. We use `amass_351.pth` from the weights folder.
 
+## Visualization
+
+We provide a visualization tool that can be applied to arbitrary videos. However, so far the person detector and the trained ViTPose model could not be exported to onnx in a working way. The models provided so far are very bad, we will fix this in the future. For results using the real working ViTpose results, use the downloaded ViTPose results file as described below. However, if you want to download the broken 2D models and experiment with them, download them [here](https://mediastore.rz.uni-augsburg.de/get/3ZlfF6d3YQ/) and put them in the folder `vitpose/models_vitpose`.
+
+To run the visualization, execute 
+```bash
+python -m visualization.main -c <config> -w <weights> -v <video> -o <output_dir> --fit3d <path to downloaded vitpose 2d keypoints>
+``` 
+A visualization with the given video and model is then created and stored in the given output folder. The visualization takes several optional settings, which will be explained in the following:
+- -c: Path to config file
+- -w: Path to weights file
+- -v: Path to video
+- -o: Folder for visualization output
+- -b: If you want to specify beta parameters for the visulized person, provide them here (10 betas as a list)
+- --matplotlib: If set, the visualization is done with matplotlib instead of pyrender, which takes a lot more time but also works without OpenGL and pyrender installed.
+- --smoothing: If set, a smoothing is performed across the single frame results. Leads to less jitter in the output, which looks a little better.
+- -a: Path to a json file containing a dictionary mapping from anthropometric measurement names to values. An example is provided in `visualization/example_anthros.json`
+- --cam:  In case pyrender is used: `[fx, fy, cx, cy]` of the camera. If not set, a default camera is used. In case of matplotlib: azimuth angle for the camera, if not set, a standard of 30 is used. 
+- --pelvis_pos:  only usable with pyrender: to reproject the meshes at the correct positions to the image, the pelvis positions are needed. If not set, the rendering is done without the image. Provide the values as a npy file.
+- --fit3d: Currently, the onnx export does not work correctly. To load the vitpose results from a file, set this path. It should be the npz file that you can download as described above (download [here](https://mediastore.rz.uni-augsburg.de/get/0G8X0KU02s/)).
+
+Example for visualization with reprojection in the image (camera set, body shape set, pelvis pos set): `visualization/examples/with_image.mp4`
+Example for visualization without reprojection in the image with pyrender: `visualization/examples/pyrender.mp4`
+Example for visualization without reprojection in the image with matplotlib: `visualization/examples/matplotlib.mp4`
+
 ## Citation
 
 In case this work is useful for your research, please consider citing:
