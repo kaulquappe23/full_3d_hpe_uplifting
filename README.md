@@ -73,15 +73,21 @@ A visualization with the given video and model is then created and stored in the
 - --pelvis_pos:  only usable with pyrender: to reproject the meshes at the correct positions to the image, the pelvis positions are needed. If not set, the rendering is done without the image. Provide the values as a npy file.
 - --fit3d: Currently, the onnx export does not work correctly. To load the vitpose results from a file, set this path. It should be the npz file that you can download as described above (download [here](https://mediastore.rz.uni-augsburg.de/get/0G8X0KU02s/)).
 
-Example for visualization with reprojection in the image (camera set, body shape set, pelvis pos set): `visualization/examples/with_image.mp4`
+Example for visualization with reprojection in the image (camera set, body shape set, pelvis pos set): 
+
+
 https://github.com/user-attachments/assets/b9d9362f-7eb3-4ff6-a8ba-0b6de47b8da5
 
 
-Example for visualization without reprojection in the image with pyrender: `visualization/examples/pyrender.mp4`
+Example for visualization without reprojection in the image with pyrender: 
+
+
 https://github.com/user-attachments/assets/00f5a5bf-618c-40e0-81e5-703cc8fbeb3e
 
 
-Example for visualization without reprojection in the image with matplotlib: `visualization/examples/matplotlib.mp4`
+Example for visualization without reprojection in the image with matplotlib: 
+
+
 https://github.com/user-attachments/assets/31b1fc9d-d4ee-4451-a30e-f26c5d0b5961
 
 
