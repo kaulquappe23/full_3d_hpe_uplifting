@@ -54,7 +54,7 @@ with one of the provided configs from the experiments folder. The weights and te
 
 ## Visualization
 
-We provide a visualization tool that can be applied to arbitrary videos. However, so far the person detector and the trained ViTPose model could not be exported to onnx in a working way. The models provided so far are very bad, we will fix this in the future. For results using the real working ViTpose results, use the downloaded ViTPose results file as described below. However, if you want to download the broken 2D models and experiment with them, download them [here](https://mediastore.rz.uni-augsburg.de/get/3ZlfF6d3YQ/) and put them in the folder `vitpose/models_vitpose`.
+We provide a visualization tool that can be applied to arbitrary videos. However, the person detector and 2D human pose estimation model are trained on fit3d, hence they are not a foundation model that works ideally on arbitrary videos. You can download them [here](https://mediastore.rz.uni-augsburg.de/get/cPhCHUd_GK/). Put them in the folder `vitpose/models_vitpose` in order to run the visualization tool.
 
 To run the visualization, execute 
 ```bash
@@ -71,7 +71,7 @@ A visualization with the given video and model is then created and stored in the
 - -a: Path to a json file containing a dictionary mapping from anthropometric measurement names to values. An example is provided in `visualization/example_anthros.json`
 - --cam:  In case pyrender is used: `[fx, fy, cx, cy]` of the camera. If not set, a default camera is used. In case of matplotlib: azimuth angle for the camera, if not set, a standard of 30 is used. 
 - --pelvis_pos:  only usable with pyrender: to reproject the meshes at the correct positions to the image, the pelvis positions are needed. If not set, the rendering is done without the image. Provide the values as a npy file.
-- --fit3d: Currently, the onnx export does not work correctly. To load the vitpose results from a file, set this path. It should be the npz file that you can download as described above (download [here](https://mediastore.rz.uni-augsburg.de/get/0G8X0KU02s/)).
+- --fit3d: If you want to skip the person detection and 2D human pose estimation, you can also load the vitpose results from a file. In that case, set this path to the npz file that you can download as described above (download [here](https://mediastore.rz.uni-augsburg.de/get/0G8X0KU02s/)).
 
 Example for visualization with reprojection in the image (camera set, body shape set, pelvis pos set): 
 

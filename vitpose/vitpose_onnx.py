@@ -53,11 +53,9 @@ def execute_vitpose_inference(img_files, visualize=False, batch_size=32):
     mmdet_onnx_file = "vitpose/models_vitpose/rtmdet_x_8xb32-300e_coco.onnx"
     sess_options = rt.SessionOptions()
     sess_options.graph_optimization_level = rt.GraphOptimizationLevel.ORT_ENABLE_ALL
-    #sess_options.optimized_model_filepath = mmdet_onnx_file.replace('.onnx', '_opt.onnx')
     sess_mmdet = rt.InferenceSession(mmdet_onnx_file, sess_options, providers=["CUDAExecutionProvider", "CPUExecutionProvider"])
 
-    #mmpose_onnx_file = "models_katja/td-hm_ViTPose-large_8xb64-210e_coco-256x192_contemplas.onnx"
-    mmpose_onnx_file = "vitpose/models_vitpose/td-hm_ViTPose-base_8xb64-210e_coco-256x192_fit3D_s10_s11.onnx"
+    mmpose_onnx_file = "vitpose/models_vitpose/td-hm_ViTPose-large_8xb64-210e_coco-256x192_fit3D_s10.onnx"
     sess_mmpose = rt.InferenceSession(mmpose_onnx_file, sess_options, providers=["CUDAExecutionProvider", "CPUExecutionProvider"])
 
     frames_boxes = []
@@ -149,7 +147,3 @@ def execute_vitpose_inference(img_files, visualize=False, batch_size=32):
         all_keypoints.append(final_keypoints)
     return np.stack(all_keypoints)
 
-
-if __name__ == '__main__':
-    img = "/data/ludwikat/logs/visualize/frames/frame_00043.jpg"
-    execute_vitpose_inference(img, visualize=True)

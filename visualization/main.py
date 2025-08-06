@@ -116,22 +116,22 @@ if __name__ == "__main__":
     cam_nums = ["50591643", "58860488", "60457274", "65906101"]
     cam_id = cam_nums.index(camera_name)
 
-    # paths.FIT3D_PROCESSED["kpts2d_path"]
+    images = sorted([os.path.join(args.output, "frames", f) for f in os.listdir(os.path.join(args.output, "frames"))])
+
+    # args.fit3d has to be paths.FIT3D_PROCESSED["kpts2d_path"] if the file should be loaded
     if args.fit3d:
         kpts_2d_vitpose = np.load(args.fit3d, allow_pickle=True)["positions_2d"].item()[subject_name][video_name][cam_id]
     else:
-        kpts_2d_vitpose = execute_vitpose_inference(images, visualize=True)
-
-    images = sorted([os.path.join(args.output, "frames", f) for f in os.listdir(os.path.join(args.output, "frames"))])
+        kpts_2d_vitpose = execute_vitpose_inference(images, visualize=False)
 
     frame_keypoints = []
 
+    # For saving pelvis pos hip locations:
     # offset = np.load(paths.FIT3D_PROCESSED["cam_kpts3d_path"], allow_pickle=True
     #                           )["positions_3d"].item()[subject_name][video_name][cam_id][:, 0]
     # with open(os.path.join(args.output, "offset.npy"), "wb") as f:
     #     np.save(f, offset)
 
-    # end TODO
 
     logging.basicConfig(
         level=logging.INFO,
