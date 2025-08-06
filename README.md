@@ -82,7 +82,7 @@ https://github.com/user-attachments/assets/0fbe3efb-a046-4bbf-a94c-aa4eeb289492
 Example for visualization without reprojection in the image with pyrender: 
 
 
-https://github.com/user-attachments/assets/3d19b84e-25c2-46c1-a6b9-481191581b49
+https://github.com/user-attachments/assets/f6fdfa74-f2c4-41d0-9972-41c36e0332fb
 
 
 Example for visualization without reprojection in the image with matplotlib: 
