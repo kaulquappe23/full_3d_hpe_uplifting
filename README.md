@@ -14,7 +14,7 @@ Create a new virtual environment and install the required packages from the `req
 
 Adjust the paths in the file `paths.py` according to your locations. The following paths need to be adjusted:
 - `SMPLX_DIR`: Path to the `smpl-models` directory containing SMPL-X model files. You can download them from the official SMPL-X website.
-- `VPOSER_DIR`: Path to the directory containing the VPoser trained weights. Should be a directory called `V02_05`
+- `VPOSER_DIR`: Path to the directory containing the VPoser trained weights. Should be a directory called `V02_05`. You can download the files [here](https://smpl-x.is.tue.mpg.de/download.php). Scroll down to `VPoser: Variational Human Pose Prior` and select `Download VPoser v2.0`. 
 - `FIT3D_DIR`: Path to the fit3D dataset base directory
 - `LOG_DIR` Path to the directory where the log files should be stored
 
@@ -54,7 +54,7 @@ with one of the provided configs from the experiments folder. The weights and te
 
 ## Visualization
 
-We provide a visualization tool that can be applied to arbitrary videos. However, the person detector and 2D human pose estimation model are trained on fit3d, hence they are not a foundation model that works ideally on arbitrary videos. You can download them [here](https://mediastore.rz.uni-augsburg.de/get/cPhCHUd_GK/). Put them in the folder `vitpose/models_vitpose` in order to run the visualization tool.
+We provide a visualization tool that can be applied to arbitrary videos. However, the person detector and 2D human pose estimation model are trained on fit3d, hence they are not a foundation model that works ideally on arbitrary videos. You can download them [here](https://myweb.rz.uni-augsburg.de/~lienhart/full_3d_hpe_uplifting_models_vitpose.zip). Put them in the folder `vitpose/models_vitpose` in order to run the visualization tool.
 
 To run the visualization, execute 
 ```bash
