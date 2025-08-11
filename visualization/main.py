@@ -220,7 +220,8 @@ if __name__ == "__main__":
         im_vid = sorted([os.path.join(args.output, "frames", img) for img in os.listdir(os.path.join(args.output, "frames")) if
                          img.endswith(".jpg") and img.startswith("frame")])
         images = [cv2.cvtColor(cv2.imread(vid_path), cv2.COLOR_RGB2BGR) for vid_path in im_vid]
-    shutil.rmtree(os.path.join(args.output, "plots"))
+    if os.path.exists(os.path.join(args.output, "plots")):
+        shutil.rmtree(os.path.join(args.output, "plots"))
     os.makedirs(os.path.join(args.output, f"plots"), exist_ok=True)
     vis(results, betas, cam, pred_kpts3d, smplx_layer, cfg.DEVICE, os.path.join(args.output, f"plots"), pelvis_pos, args.matplotlib, images)
 
