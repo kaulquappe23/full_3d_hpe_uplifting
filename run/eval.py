@@ -159,7 +159,8 @@ def load_model(cfg, weights):
 
 
 def transform_rotations(cfg, rots, ortho=False):
-    rots = torch.from_numpy(rots).clone()
+    if isinstance(rots, np.ndarray):
+        rots = torch.from_numpy(rots).clone()
     if cfg.ROT_REP == RotType.ROT_MAT:
         rots = matrix_to_axis_angle(rots)
     elif cfg.ROT_REP == RotType.QUATERNION:
