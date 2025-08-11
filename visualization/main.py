@@ -85,9 +85,9 @@ def vis(rot, beta, cam, kpts, smplx_layer, device, output_dir, pelvis_pos=None, 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("-c", "--cfg", type=str)
-    parser.add_argument("-w", "--weights", type=str)
-    parser.add_argument("-v", "--video", type=str)
+    parser.add_argument("-c", "--cfg", type=str, required=True)
+    parser.add_argument("-w", "--weights", type=str, required=True)
+    parser.add_argument("-v", "--video", type=str, required=True)
     parser.add_argument("-o", "--output", type=str, required=False)
     parser.add_argument("-b", "--betas", type=str, required=False)
     parser.add_argument("--matplotlib", action="store_true", help="If set, the visualization is done with matplotlib instead of pyrender, which takes a lot more time.")
@@ -101,7 +101,8 @@ if __name__ == "__main__":
     if not args.output:
         args.output = os.path.dirname(args.video)
     os.makedirs(args.output, exist_ok=True)
-    shutil.rmtree(os.path.join(args.output, "frames"))
+    if os.path.exists(os.path.join(args.output, "frames")):
+        shutil.rmtree(os.path.join(args.output, "frames"))
     os.makedirs(os.path.join(args.output, "frames"), exist_ok=True)
 
     extract_frames_ffmpeg(args.video, os.path.join(args.output, "frames"), fps=50)
