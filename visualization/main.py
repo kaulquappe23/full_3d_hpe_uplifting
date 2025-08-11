@@ -109,17 +109,22 @@ if __name__ == "__main__":
     w, h = first_im.size
 
     video_path = args.video
-    video_split = video_path.split(os.sep)
-    video_name = video_split[-1][:-4]
-    camera_name = video_split[-2]
-    subject_name = video_split[-4]
-    cam_nums = ["50591643", "58860488", "60457274", "65906101"]
-    cam_id = cam_nums.index(camera_name)
 
     images = sorted([os.path.join(args.output, "frames", f) for f in os.listdir(os.path.join(args.output, "frames"))])
 
     # args.fit3d has to be paths.FIT3D_PROCESSED["kpts2d_path"] if the file should be loaded
     if args.fit3d:
+        try:
+            video_split = video_path.split(os.sep)
+            video_name = video_split[-1][:-4]
+            camera_name = video_split[-2]
+            subject_name = video_split[-4]
+            cam_nums = ["50591643", "58860488", "60457274", "65906101"]
+            cam_id = cam_nums.index(camera_name)
+        except Exception as e:
+            print("For using the prepared fit3d vitpose files, the filename of the video has to contain camera, action and subject.")
+            raise e
+
         kpts_2d_vitpose = np.load(args.fit3d, allow_pickle=True)["positions_2d"].item()[subject_name][video_name][cam_id]
     else:
         kpts_2d_vitpose = execute_vitpose_inference(images, visualize=False)
