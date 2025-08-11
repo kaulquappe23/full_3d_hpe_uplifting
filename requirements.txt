@@ -15,4 +15,4 @@ onnx==1.18.0
 onnxruntime-gpu==1.22.0
 scikit-learn==1.7.0
 matplotlib==3.10.3
-pyopengl-accelerate-3.1.9
+pyopengl-accelerate==3.1.9

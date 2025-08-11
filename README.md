@@ -13,8 +13,28 @@ Create a new virtual environment and install the required packages from the `req
 ### Paths
 
 Adjust the paths in the file `paths.py` according to your locations. The following paths need to be adjusted:
-- `SMPLX_DIR`: Path to the `smpl-models` directory containing SMPL-X model files. You can download them from the official SMPL-X website.
-- `VPOSER_DIR`: Path to the directory containing the VPoser trained weights. Should be a directory called `V02_05`. You can download the files [here](https://smpl-x.is.tue.mpg.de/download.php). Scroll down to `VPoser: Variational Human Pose Prior` and select `Download VPoser v2.0`. 
+- `SMPLX_DIR`: Path to the `models` directory containing SMPL-X model files. You can download them from the official SMPL-X website [here](https://smpl-x.is.tue.mpg.de/download.php). Click on the first button after the headline `SMPL-X Model`titled `Download SMPL-X v1.1 - Use this for SMPL-X Python codebase`. The folder structure should look as follows:
+```bash
+├── models
+│   ├── smplx
+│   │   ├── SMPLX_FEMALE.npz
+│   │   ├── SMPLX_FEMALE.pkl
+│   │   ├── SMPLX_MALE.npz
+│   │   ├── SMPLX_MALE.pkl
+│   │   ├── SMPLX_NEUTRAL.npz
+│   │   ├── SMPLX_NEUTRAL.pkl
+│   │   ├── smplx_npz.zip
+│   │   ├── version.txt
+```
+- `VPOSER_DIR`: Path to the directory containing the VPoser trained weights. Should be a directory called `V02_05`. You can download the files [here](https://smpl-x.is.tue.mpg.de/download.php). Scroll down to `VPoser: Variational Human Pose Prior` and select `Download VPoser v2.0`. The folder structure should look as follows:
+```bash
+├── V02_05
+│   ├── snapshots
+│   │   ├── V02_05_epoch=08_val_loss=0.03.ckpt
+│   │   ├── V02_05_epoch=13_val_loss=0.03.ckpt
+│   ├── V02_05.log
+│   ├── V02_05.yaml
+```
 - `FIT3D_DIR`: Path to the fit3D dataset base directory
 - `LOG_DIR` Path to the directory where the log files should be stored
 
@@ -26,7 +46,7 @@ We organize the fit3D dataset in a specific data format to access it quickly. Yo
 python -m dataset.fit3d.preparation.preparation
 ```
 
-We train our models based on the 2D keypoint output from vitpose. You can download the result for fit3D [here](https://mediastore.rz.uni-augsburg.de/get/0G8X0KU02s/). Place the file in the same folder as the processed data is stored.
+We train our models based on the 2D keypoint output from vitpose. You can download the result for fit3D [here](https://mediastore.rz.uni-augsburg.de/get/0G8X0KU02s/). Place the file in the same folder as the processed data is stored (`FIT3D_PROCESSED_ROOT` variable in the `paths.py` file)
 
 ## Evaluation
 
