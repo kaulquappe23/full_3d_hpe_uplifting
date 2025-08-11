@@ -152,7 +152,7 @@ def regress_joints(rots, betas, bs, smplx_layer):
 def load_model(cfg, weights):
     model = build_model(cfg)
     logging.info(f"Loading weights from {weights}")
-    weights = torch.load(weights, map_location=device, weights_only=False)["model"].state_dict()
+    weights = torch.load(weights, map_location=cfg.DEVICE, weights_only=False)["model"].state_dict()
     model.load_state_dict(weights)
     model = model.to(cfg.DEVICE)
     return model
