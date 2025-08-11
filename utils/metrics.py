@@ -18,7 +18,7 @@ from utils.rotation import transform_to_matrix, RotType
 def mpjpe(pred, gt, root_index, normalize=True):
     """
     Calculates the root-aligned MPJPE i.e.
-    1/N * 1/K * \sum_i \sum_j ( || (p_i,j - p_i_root) - (gt_i,j - gt_i_root) ||_2 )
+    1/N * 1/K * /sum_i /sum_j ( || (p_i,j - p_i_root) - (gt_i,j - gt_i_root) ||_2 )
     :param pred: np.array (B, K, 3). 3d pose predictions for B examples, K keypoints, in (x,y,z) format.
     :param gt: np.array (B, K, 4). 3d pose gt in (x,y,z,v) format, where v is the valid flag.
     Only keypoints with v > 0 will be included in the metric.
@@ -95,7 +95,7 @@ def nmpjpe(pred, gt, root_index, alignment="root", normalize=True):
 def pmpjpe(pred, gt, normalize=True):
     """
     Calculates the *P*rocustes aligned MPJPE i.e.
-    1/N * /sum_i min_t min_s min_R (1\K * /sum_j ( || (s*R*p_i,j) + t - gt_i,j||_2 )).
+    1/N * /sum_i min_t min_s min_R (1/K * /sum_j ( || (s*R*p_i,j) + t - gt_i,j||_2 )).
     :param pred: np.array (B, K, 3). 3d pose predictions for B examples, K keypoints, in (x,y,z) format.
     :param gt: np.array (B, K, 4). 3d pose gt in (x,y,z,v) format, where v is the valid flag.
     Only keypoints with v > 0 will be included in the metric.

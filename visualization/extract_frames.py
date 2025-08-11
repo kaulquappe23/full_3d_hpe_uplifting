@@ -60,7 +60,10 @@ def extract_frames_ffmpeg(video_path, output_folder, fps=50):
     except subprocess.CalledProcessError as e:
         print(f"Error extracting frames: {e}")
         print(f"FFmpeg stderr: {e.stderr.decode()}")
-    except FileNotFoundError:
+        raise e
+    except FileNotFoundError as e:
         print("Error: FFmpeg not found. Please ensure FFmpeg is installed and in your system's PATH.")
+        raise e
     except Exception as e:
         print(f"An unexpected error occurred: {e}")
+        raise e
