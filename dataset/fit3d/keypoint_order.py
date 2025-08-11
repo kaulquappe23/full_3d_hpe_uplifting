@@ -211,6 +211,10 @@ class Fit3DOrder26P:
         return cls._body_smplx + cls._fingers_smplx
 
     @classmethod
+    def vitpose_rl_joints(cls):
+        return cls._body_smplx + [36, 48, 30, 42]
+
+    @classmethod
     def hands(cls):
         return cls._hands
 
