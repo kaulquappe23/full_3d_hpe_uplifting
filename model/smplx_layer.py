@@ -65,11 +65,11 @@ class SMPLX_Layer(nn.Module):
             if len(pose_b.shape) == 5:
                 b, n, _, c1, c2 = pose_b.shape
                 pose_b = einops.rearrange(pose_b, "b n p c1 c2 -> (b n) p c1 c2")
-                return_smplx = self.form_rot_mat
+                return_smplx = self.from_rot_mat
             else:
                 b, n, _, c = pose_b.shape
                 pose_b = einops.rearrange(pose_b, "b n p c -> (b n) p c")
-                return_smplx = self.form_axis_angle
+                return_smplx = self.from_axis_angle
 
             shape_b = einops.rearrange(shape_b, "b n p -> (b n) p")
 
@@ -86,7 +86,7 @@ class SMPLX_Layer(nn.Module):
         j3d = j3d.squeeze(1) if not self.full_seq else j3d
         return j3d
 
-    def form_axis_angle(self, pose_b, shape_b, dtype, device):
+    def from_axis_angle(self, pose_b, shape_b, dtype, device):
         bs_b = pose_b.shape[0]
         kwargs_pose = {
             "betas": shape_b,
@@ -111,7 +111,7 @@ class SMPLX_Layer(nn.Module):
         # Forward using the parametric 3d model SMPL-X layer
         return self.bm_x(**kwargs_pose)
 
-    def form_rot_mat(self, pose_b, shape_b, dtype, device):
+    def from_rot_mat(self, pose_b, shape_b, dtype, device):
         bs_b = pose_b.shape[0]
         kwargs_pose = {
             "betas": shape_b,
