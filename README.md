@@ -96,7 +96,7 @@ A visualization with the given video and model is then created and stored in the
 Example for visualization with pyrender with reprojection in the image (camera set, body shape set, pelvis pos set): 
 
 
-https://github.com/user-attachments/assets/0fbe3efb-a046-4bbf-a94c-aa4eeb289492
+https://github.com/user-attachments/assets/615f04b4-24bc-4558-8ed5-d8a0b28e3662
 
 
 Example for visualization without reprojection in the image with pyrender: 
