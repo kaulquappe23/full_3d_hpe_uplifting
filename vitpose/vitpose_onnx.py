@@ -48,7 +48,7 @@ def execute_vitpose_inference(img_files, visualize=False, batch_size=32):
     for i in tqdm(range(num_batches), colour="CYAN", desc="Person detection"):
         # loading images of the batch
         start_batch = i * batch_size
-        end_batch = (i + 1) * batch_size if (i + 1) * batch_size < len(images) else len(images)
+        end_batch = (i + 1) * batch_size if (i + 1) * batch_size < len(img_files) else len(img_files)
         batch_img_files = img_files[start_batch: end_batch]
         images = []
         for img_file in batch_img_files:
