@@ -34,21 +34,6 @@ def execute_vitpose_inference(img_files, visualize=False, batch_size=32):
     bbox_thr = 0.2
     det_cat_id = 0
 
-    images = []
-
-    for img_file in tqdm(img_files, colour="CYAN", desc="Loading frames in memory"):
-        img = cv2.imread(img_file)
-        max_size_length = max(img.shape)
-        if max_size_length > 1024:
-            new_w = int(img.shape[1] * 1024 / max_size_length)
-            new_h = int(img.shape[0] * 1024 / max_size_length)
-            img = cv2.resize(img, dsize=(new_w, new_h))
-        #img_orig = cv2.resize(img, dsize=(640,416))
-        img_orig = img[:img.shape[0] // 16 * 16, : img.shape[1] // 16 * 16,:]
-        img = toTensor(img_orig)
-        images.append(img)
-    images = np.stack(images)
-
     print(f"ONNX is running on {rt.get_device()}")
     mmdet_onnx_file = "vitpose/models_vitpose/rtmdet_x_8xb32-300e_coco.onnx"
     sess_options = rt.SessionOptions()
@@ -59,12 +44,28 @@ def execute_vitpose_inference(img_files, visualize=False, batch_size=32):
     sess_mmpose = rt.InferenceSession(mmpose_onnx_file, sess_options, providers=["CUDAExecutionProvider", "CPUExecutionProvider"])
 
     frames_boxes = []
-    num_batches = int(np.ceil(images.shape[0] / batch_size))
-    h, w = images.shape[2:]
+    num_batches = int(np.ceil(len(img_files) / batch_size))
     for i in tqdm(range(num_batches), colour="CYAN", desc="Person detection"):
+        # loading images of the batch
+        start_batch = i * batch_size
         end_batch = (i + 1) * batch_size if (i + 1) * batch_size < len(images) else len(images)
-        in_batch = images[i * batch_size: end_batch]
-        out_mmdet = sess_mmdet.run(None, {"input": in_batch})
+        batch_img_files = img_files[start_batch: end_batch]
+        images = []
+        for img_file in batch_img_files:
+            img = cv2.imread(img_file)
+            max_size_length = max(img.shape)
+            if max_size_length > 1024:
+                new_w = int(img.shape[1] * 1024 / max_size_length)
+                new_h = int(img.shape[0] * 1024 / max_size_length)
+                img = cv2.resize(img, dsize=(new_w, new_h))
+            # img_orig = cv2.resize(img, dsize=(640,416))
+            img_orig = img[:img.shape[0] // 16 * 16, : img.shape[1] // 16 * 16, :]
+            img = toTensor(img_orig)
+            images.append(img)
+        input_batch = np.stack(images)
+        h, w = input_batch.shape[2:]
+
+        out_mmdet = sess_mmdet.run(None, {"input": input_batch})
         object_boxes, object_ids = out_mmdet # First dimension is the number of images
         batch_size = object_boxes.shape[0]
         for b in range(batch_size):
@@ -84,7 +85,7 @@ def execute_vitpose_inference(img_files, visualize=False, batch_size=32):
                 frames_boxes.append(frame_boxes[max_score])
 
     all_keypoints = []
-    for i, (person_box, img_orig) in enumerate(tqdm(zip(frames_boxes, images), colour="CYAN", desc="2D Keypoint detection", total=len(images))):
+    for i, (person_box, img_file) in enumerate(tqdm(zip(frames_boxes, img_files), colour="CYAN", desc="2D Keypoint detection", total=len(images))):
         result = dict()
         result['image_size'] = [192,256] #img_orig.shape[:2] # OpenCV image with (w, h, b)
         x1, y1, x2, y2 = person_box
@@ -93,6 +94,14 @@ def execute_vitpose_inference(img_files, visualize=False, batch_size=32):
         result['bbox'][1] = y1 # in x, y, w, h
         result['bbox'][2] = x2-x1
         result['bbox'][3] = y2-y1
+        img = cv2.imread(img_file)
+        max_size_length = max(img.shape)
+        if max_size_length > 1024:
+            new_w = int(img.shape[1] * 1024 / max_size_length)
+            new_h = int(img.shape[0] * 1024 / max_size_length)
+            img = cv2.resize(img, dsize=(new_w, new_h))
+        # img_orig = cv2.resize(img, dsize=(640,416))
+        img_orig = img[:img.shape[0] // 16 * 16, : img.shape[1] // 16 * 16, :]
         result['img'] = img_orig.transpose(1, 2, 0)
         prep = helpers.TopDownGetBboxCenterScale()
         result = prep(result)
