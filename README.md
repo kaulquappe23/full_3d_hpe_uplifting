@@ -81,19 +81,19 @@ To run the visualization, execute
 python -m visualization.main -c <config> -w <weights> -v <video> -o <output_dir> --fit3d <path to downloaded vitpose 2d keypoints>
 ``` 
 A visualization with the given video and model is then created and stored in the given output folder. The visualization takes several optional settings, which will be explained in the following:
-- -c: Path to config file
-- -w: Path to weights file
-- -v: Path to video
-- -o: Folder for visualization output
-- -b: If you want to specify beta parameters for the visulized person, provide them here (10 betas as a list)
-- --matplotlib: If set, the visualization is done with matplotlib instead of pyrender, which takes a lot more time but also works without OpenGL and pyrender installed.
-- --smoothing: If set, a smoothing is performed across the single frame results. Leads to less jitter in the output, which looks a little better.
-- -a: Path to a json file containing a dictionary mapping from anthropometric measurement names to values. An example is provided in `visualization/example_anthros.json`
-- --cam:  In case pyrender is used: `[fx, fy, cx, cy]` of the camera. If not set, a default camera is used. In case of matplotlib: azimuth angle for the camera, if not set, a standard of 30 is used. 
-- --pelvis_pos:  only usable with pyrender: to reproject the meshes at the correct positions to the image, the pelvis positions are needed. If not set, the rendering is done without the image. Provide the values as a npy file.
-- --fit3d: If you want to skip the person detection and 2D human pose estimation, you can also load the vitpose results from a file. In that case, set this path to the npz file that you can download as described above (download [here](https://mediastore.rz.uni-augsburg.de/get/0G8X0KU02s/)).
+- -c: (mandatory) Path to config file 
+- -w: (mandatory) Path to weights file
+- -v: (mandatory) Path to video
+- -o: (mandatory) Folder for visualization output
+- -b: (optional) If you want to specify beta parameters for the visualized person, provide them here (10 betas as a list). If neither -b or -a are set, the standard body shape (beta parameters full of zeros) is used.
+- --matplotlib: (optional) If set, the visualization is done with matplotlib instead of pyrender, which takes a lot more time but also works without OpenGL and pyrender installed.
+- --smoothing: (optional) If set, a smoothing is performed across the single frame results. Leads to less jitter in the output, which looks a little better.
+- -a: (optional) Path to a json file containing a dictionary mapping from anthropometric measurement names to values. An example is provided in `visualization/example_anthros.json`. If neither -b or -a are set, the standard body shape (beta parameters full of zeros) is used.
+- --cam:  (optional) In case pyrender is used: `[fx, fy, cx, cy]` of the camera. If not set, a default camera is used (an example camera of fit3d). In case of matplotlib: azimuth angle for the camera, if not set, a standard of 30 is used. 
+- --pelvis_pos: (optional) only usable with pyrender: to reproject the meshes at the correct positions to the image, the pelvis positions are needed. If not set, the rendering is done without the image. Provide the values as a npy file, an array with the 3D pelvis position for each video frame.
+- --fit3d: (optional) If you want to skip the person detection and 2D human pose estimation, you can also load the vitpose results from a file. In that case, set this path to the npz file that you can download as described above (download [here](https://mediastore.rz.uni-augsburg.de/get/0G8X0KU02s/)).
 
-Example for visualization with reprojection in the image (camera set, body shape set, pelvis pos set): 
+Example for visualization with pyrender with reprojection in the image (camera set, body shape set, pelvis pos set): 
 
 
 https://github.com/user-attachments/assets/0fbe3efb-a046-4bbf-a94c-aa4eeb289492
