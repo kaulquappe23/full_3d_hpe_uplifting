@@ -147,6 +147,10 @@ class UpliftPoseTransformer(UpliftUpsampleTransformer):
 
         b, n, p, _ = x.shape
         mid_frame = self.num_frames // 2
+
+        if betas is not None and len(betas.shape) == 1:
+            betas = torch.tile(betas, (b, n, 1))
+
         x = self.spatial_transformation(x)
         # Full sequence temporal transformer
         x, att_list = self.temporal_transformation(x, stride_mask=stride_mask)
