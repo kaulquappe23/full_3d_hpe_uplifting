@@ -85,7 +85,7 @@ def execute_vitpose_inference(img_files, visualize=False, batch_size=32):
                 frames_boxes.append(frame_boxes[max_score])
 
     all_keypoints = []
-    for i, (person_box, img_file) in enumerate(tqdm(zip(frames_boxes, img_files), colour="CYAN", desc="2D Keypoint detection", total=len(images))):
+    for i, (person_box, img_file) in enumerate(tqdm(zip(frames_boxes, img_files), colour="CYAN", desc="2D Keypoint detection", total=len(img_files))):
         result = dict()
         result['image_size'] = [192,256] #img_orig.shape[:2] # OpenCV image with (w, h, b)
         x1, y1, x2, y2 = person_box
@@ -102,7 +102,7 @@ def execute_vitpose_inference(img_files, visualize=False, batch_size=32):
             img = cv2.resize(img, dsize=(new_w, new_h))
         # img_orig = cv2.resize(img, dsize=(640,416))
         img_orig = img[:img.shape[0] // 16 * 16, : img.shape[1] // 16 * 16, :]
-        result['img'] = img_orig.transpose(1, 2, 0)
+        result['img'] = img_orig#.transpose(1, 2, 0)
         prep = helpers.TopDownGetBboxCenterScale()
         result = prep(result)
         tt= helpers.TopdownAffine((192,256), use_udp=True)
